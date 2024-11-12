@@ -10,7 +10,10 @@ app.use(express.json());
  *     Route: /version
  *     Response (Text): "1.0.0"
  */
-// Your code here 
+
+app.get('/version', (req, res) => {
+    res.send('1.0.0');
+})
 
 /**
  *  Basic Phase 2 - Route param and JSON response
@@ -28,7 +31,29 @@ app.use(express.json());
  *  Hint: Use your name, birth date and favorite movies (as strings in the code)
  *  combined with the id sent as a route parameter in the url
  */
-// Your code here 
+
+app.get('/viewers/:id', (req, res) => {
+
+    const userObject = {
+        id: req.params.id,
+        firstName: 'Robert',
+        lastName: 'Weekes',
+        birthDate: '12/08/1983',
+        favoriteMovies: ['Jurassic Park', 'The Matrix', 'Interstellar']
+    }
+
+    console.log(userObject);
+    // search query: ?firstName=Robert&lastName=Weekes&birthDate=12/08/1983&favoriteMovies=[Jurassic Park, The Matrix, Interstellar]
+
+    // {
+    //     "firstName": "Robert",
+    //     "lastName": "Weekes",
+    //     "birthDate": "MM/DD/YYYY",
+    //     "favoriteMovies": [Jurassic Park, The Matrix, Interstellar]
+    // }
+
+    res.json( userObject );
+})
 
 /** Basic Phase 3 - Query params in URL
  *      Method: GET
@@ -47,7 +72,14 @@ app.use(express.json());
  *          message required
  *          message required
  */
-// Your code here 
+// Your code here
+
+app.get('/info', (req, res) => {
+    const message = req.query.message;
+
+    if (!message) res.send('message required');
+    else res.send(message);
+})
 
 /**
  *  IMPORTANT: Scroll to the top for basic phases.
@@ -81,7 +113,29 @@ app.use(express.json());
  *      Alternate response object:
  *          { "id": 98765432, "name": "Honey Sweet", "year": 1967, "isFavorite": false }
  */
-// Your code here 
+// Your code here
+
+app.post('/movies', (req, res) => {
+const { name, year, isFavorite } = req.body;
+console.log(name);
+console.log(year);
+console.log(isFavorite);
+res.json(name, year, isFavorite);
+
+})
+
+    // set query variables - thats for phase 3!
+    // const firstName = req.query.firstName;
+    // const lastName = req.query.lastName;
+    // const birthDate = req.query.birthDate;
+    // const favoriteMovies = req.query.favoriteMovies;
+
+    // req.body.id = req.params.id;
+    // req.body.firstName = firstName;
+    // req.body.lastName = lastName;
+    // req.body.birthDate = birthDate;
+    // req.body.favoriteMovies = favoriteMovies;
+
 
 /**
  *  Advanced Bonus Phase B - Research how to return static
@@ -98,7 +152,7 @@ app.use(express.json());
  *
  *      Test route: /logo.png
  */
-// Your code here 
+// Your code here
 
 // DO NOT EDIT - Set port and listener
 if (require.main === module) {
